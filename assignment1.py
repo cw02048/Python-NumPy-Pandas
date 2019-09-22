@@ -79,7 +79,7 @@ def calculate(num, cmd): # num은 진수로 나누어줄 수, cmd는 변환할 �
 
 def main():
     
-    print('\n\nThis program will convert a base 10 number into another base')
+    print('\n\nThis program will convert a base 10 number into another base\n')
     
     # stop을 입력받을 때까지 반복
     while True:

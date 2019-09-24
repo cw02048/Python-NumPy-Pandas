@@ -44,7 +44,7 @@ def choice():
             return 16
         # 올바르지 않은 명령어 입력시
         else:
-            print('\nInvalid choice!')
+            print('Invalid choice!')
         
 # 진수 변환을 계산해주는 함수
 def calculate(num, cmd): # num은 진수로 나누어줄 수, cmd는 변환할 진수

@@ -55,8 +55,15 @@ def printMenu() :
     
     print('\n---------------------------------')
     print('Enter 1 to display the inventory')
-    
-    return
+    print('Enter 2 to display the books by one author')
+    print('Enter 3 to add a book')
+    print('Enter 4 to change the price')
+    print('Enter 5 to change the qty on hand')
+    print('Enter 6 to view the total number of books in the inventory')
+    print('Enter 7 to see the total amount of the entire inventory')
+    print('Enter 8 to exit')
+       
+    return input('Enter your choice: ')
 
 def displayInventory(theInventory) :
     
@@ -92,6 +99,31 @@ def main() :
     greeting()
     readDatabase(theInventory)
     print(theInventory)
-             
+    
+    while True: 
+        
+        choice = printMenu()
+        
+        if choice == '1':
+            displayInventory(theInventory)
+        elif choice == '2':
+            displayAuthorsWork(theInventory)
+        elif choice == '3':
+            addBook(theInventory)
+        elif choice == '4':
+            changePrice(theInventory)
+        elif choice == '5':
+            changeQty(theInventory)
+        elif choice == '6':
+            totalQty(theInventory)
+        elif choice == '7':
+            calculateTotalAmount(theInventory)
+        elif choice == '8':
+            print('Thank you for using this program')
+            break
+        else :
+            print('invalid choice')      
+    
+    return
 
 main()

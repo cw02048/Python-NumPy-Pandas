@@ -8,36 +8,43 @@ Created on Tue Sep 24 13:57:46 2019
 import os
 
 def greeting() :
+    
     print('welcome to the bookstore program!')
+    
     return
 
-def readDatabase() :
+def readDatabase(theInventory) :
             
     while True :
+        
         fileName = input('Enter the name of the file: ')
+        
         if os.path.isfile(fileName) == True :
             break
         else :
             print('Error reading database')
         
-    parsingDatabase(fileName)
-        
+    parsingDatabase(fileName, theInventory)  
+      
     return
     
    
-def parsingDatabase(fileName):
+def parsingDatabase(fileName, theInventory):
     
     file = open(fileName)
     
-    while True:        
+    while True:      
+        
         line = file.readline()
         line = line.rstrip('\n')
+        
         if (line == '') :
-            file.close()   
-            print(theInventory)
+            file.close()        
+            
             return
         else :
             line = line.split(',')
+            
             if line[0] + ', ' + line[1] in theInventory :
                 theInventory[line[0] + ', ' + line[1]].append([line[2], line[3], line[4]])               
             else:
@@ -45,6 +52,7 @@ def parsingDatabase(fileName):
                 
 
 def printMenu() :
+    
     print('\n---------------------------------')
     print('Enter 1 to display the inventory')
     
@@ -80,10 +88,10 @@ def calculateTotalAmount(theInventory) :
 
 def main() :
     
-    global theInventory
     theInventory = {}
     greeting()
-    readDatabase()
+    readDatabase(theInventory)
+    print(theInventory)
              
 
 main()

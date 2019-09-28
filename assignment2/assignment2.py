@@ -5,42 +5,85 @@ Created on Tue Sep 24 13:57:46 2019
 @author: cw020
 """
 
-greeting() :
+import os
+
+def greeting() :
+    print('welcome to the bookstore program!')
+    return
+
+def readDatabase() :
+            
+    while True :
+        fileName = input('Enter the name of the file: ')
+        if os.path.isfile(fileName) == True :
+            break
+        else :
+            print('Error reading database')
+        
+    parsingDatabase(fileName)
+        
+    return
+    
+   
+def parsingDatabase(fileName):
+    
+    file = open(fileName)
+    
+    while True:        
+        line = file.readline()
+        line = line.rstrip('\n')
+        if (line == '') :
+            file.close()   
+            print(theInventory)
+            return
+        else :
+            line = line.split(',')
+            if line[0] + ', ' + line[1] in theInventory :
+                theInventory[line[0] + ', ' + line[1]].append([line[2], line[3], line[4]])               
+            else:
+                theInventory.update({line[0] + ', ' + line[1]: [[line[2], line[3], line[4]]]})
+                
+
+def printMenu() :
+    print('\n---------------------------------')
+    print('Enter 1 to display the inventory')
     
     return
 
-readDatabase(theInventory) :
+def displayInventory(theInventory) :
     
     return
 
-printMenu() :
+def displayAuthorsWork(theInventory) :
     
     return
 
-displayInventory(theInventory) :
+def addBook(theInventory) :
     
     return
 
-displayAuthorsWork(theInventory) :
+def changePrice(theInventory) :
     
     return
 
-addBook(theInventory) :
+def changeQty(theInventory) :
     
     return
 
-changePrice(theInventory) :
+def totalQty(theInventory) :
     
     return
 
-changeQty(theInventory) :
+def calculateTotalAmount(theInventory) :
     
     return
 
-totalQty(theInventory) :
+def main() :
     
-    return
+    global theInventory
+    theInventory = {}
+    greeting()
+    readDatabase()
+             
 
-calculateTotalAmount(theInventory) :
-    
-    return
+main()

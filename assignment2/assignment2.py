@@ -38,7 +38,7 @@ def parsingDatabase(fileName, theInventory):
         line = file.readline()
         line = line.rstrip('\n')
         
-        if (line == '') :
+        if line == '' :
             file.close()        
             
             return
@@ -62,15 +62,38 @@ def printMenu() :
     print('Enter 6 to view the total number of books in the inventory')
     print('Enter 7 to see the total amount of the entire inventory')
     print('Enter 8 to exit')
-       
-    return input('Enter your choice: ')
+    choice = input('Enter your choice: ')
+    
+    return  choice
 
 def displayInventory(theInventory) :
     
+    for (author, book) in sorted(theInventory.items()):
+        
+        print('The author is: ' + author)
+        
+        for [title, qty, price] in sorted(book):
+            
+            print('\n       The title is: ' + title + '\n       The qty is: ' + qty + '\n       The price is: ' + price + '\n\n       ----')
+          
     return
 
 def displayAuthorsWork(theInventory) :
-    
+       
+    firstName = input('Enter the author\'s first name: ')
+    lastName = input('Enter the author\'s last name: ')
+           
+    author = lastName.lower() + ', ' + firstName.lower()
+     
+    if (author.title() in theInventory) == False:
+        print('Sorry, but no books by ' + author.title() + ' in the inventory')
+    else:
+        for [title, qty, price] in sorted(theInventory[author.title()]):
+         
+            print('       The title is: ' + title + '\n       The qty is: ' + qty + '\n       The price is: ' + price + '\n\n       ----')        
+        
+        return
+          
     return
 
 def addBook(theInventory) :
@@ -98,7 +121,6 @@ def main() :
     theInventory = {}
     greeting()
     readDatabase(theInventory)
-    print(theInventory)
     
     while True: 
         

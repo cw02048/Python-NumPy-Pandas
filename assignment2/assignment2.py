@@ -64,7 +64,7 @@ def printMenu() :
     print('Enter 8 to exit')
     choice = input('Enter your choice: ')
     
-    return  choice
+    return choice
 
 def displayInventory(theInventory) :
     
@@ -80,24 +80,96 @@ def displayInventory(theInventory) :
 
 def displayAuthorsWork(theInventory) :
        
-    firstName = input('Enter the author\'s first name: ')
-    lastName = input('Enter the author\'s last name: ')
+    firstName = input('Enter the author\'s first name: ').lower().title()
+    lastName = input('Enter the author\'s last name: ').lower().title()
            
-    author = lastName.lower() + ', ' + firstName.lower()
+    author = lastName + ', ' + firstName
      
-    if (author.title() in theInventory) == False:
-        print('Sorry, but no books by ' + author.title() + ' in the inventory')
+    if (author in theInventory) == False:
+        
+        print('Sorry, but no books by ' + author + ' in the inventory')
+        
+        return
     else:
-        for [title, qty, price] in sorted(theInventory[author.title()]):
+        
+        for [title, qty, price] in sorted(theInventory[author]):
          
             print('       The title is: ' + title + '\n       The qty is: ' + qty + '\n       The price is: ' + price + '\n\n       ----')        
         
         return
-          
-    return
-
+    
 def addBook(theInventory) :
     
+    firstName = input('Enter the author\'s first name: ').lower().title()
+    lastName = input('Enter the author\'s last name: ').lower().title() 
+    title = input('Enter the title: ').lower().title()
+    qty = inputQty()
+    price = inputPrice()
+    
+    author = lastName + ', ' + firstName
+    
+    if checkExisting(author, title, theInventory) == 'existing book':
+        
+        print('This book is already in the Inventory and cannot be added again')
+        
+    elif checkExisting(author, title, theInventory) == 'existing author':
+        
+        theInventory[author].append([title, qty, price])
+        
+    else:
+        
+        theInventory.update({author: [[title, qty, price]]})
+               
+    return
+
+def checkExisting(author, title, theInventory):
+    
+    if author in theInventory:
+        
+        if title in theInventory[author]: 
+            
+            return 'existing book'
+        
+        else:
+            
+            return 'existing author'
+        
+    else:
+        
+        return
+
+def inputQty():
+    
+    while True:
+        
+        qty = input('Enter the qty: ')
+        
+        if(qty.isdigit() == True):
+            
+            qty = float(qty)
+        
+            if (qty % 1 == 0 and qty > 0):
+                               
+                return str(int(qty))
+            
+        print('Invalid input for qty.')
+
+def inputPrice():
+    
+    while True:
+        
+        price = input('Enter the price: ')
+        
+        if(len(price) == 4 and price[1] == '.' and price.replace('.', '', 1).isdigit() == True):
+            
+            price = float(price)
+            
+            if 0.00 < price <= 9.99:
+                
+                return str(price)
+        
+        print('Invalid input for price.')
+        
     return
 
 def changePrice(theInventory) :

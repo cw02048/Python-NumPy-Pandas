@@ -103,10 +103,10 @@ def addBook(theInventory) :
     
     author = lastName + ', ' + firstName
     
-    if checkExisting(author, title, theInventory) == 'existing book':        
+    if checkExisting(author, title, theInventory).isdigit():        
         print('This book is already in the Inventory and cannot be added again')
         
-    elif checkExisting(author, title, theInventory).isdigit():   
+    elif checkExisting(author, title, theInventory) == 'existing author':   
         qty = inputQty()
         price = inputPrice()
         theInventory[author].append([title, qty, price])
@@ -128,10 +128,10 @@ def checkExisting(author, title, theInventory):
             if title in i:         
                 return str(cnt)
             cnt += 1
-        return 'existing author'           
+        return 'existing author'    
                 
     else:
-        return 'no book'
+        return
 
 def inputQty():
     

@@ -21,6 +21,7 @@ def readDatabase(theInventory) :
         
         if os.path.isfile(fileName) == True :
             break
+        
         else :
             print('Error reading database')
         
@@ -39,14 +40,15 @@ def parsingDatabase(fileName, theInventory):
         line = line.rstrip('\n')
         
         if line == '' :
-            file.close()        
-            
+            file.close()                   
             return
+        
         else :
             line = line.split(',')
             
             if line[0] + ', ' + line[1] in theInventory :
                 theInventory[line[0] + ', ' + line[1]].append([line[2], line[3], line[4]])               
+           
             else:
                 theInventory.update({line[0] + ', ' + line[1]: [[line[2], line[3], line[4]]]})
                 
@@ -68,12 +70,10 @@ def printMenu() :
 
 def displayInventory(theInventory) :
     
-    for (author, book) in sorted(theInventory.items()):
-        
+    for (author, book) in sorted(theInventory.items()):      
         print('The author is: ' + author)
         
-        for [title, qty, price] in sorted(book):
-            
+        for [title, qty, price] in sorted(book):           
             print('\n       The title is: ' + title + '\n       The qty is: ' + qty + '\n       The price is: ' + price + '\n\n       ----')
           
     return
@@ -85,16 +85,13 @@ def displayAuthorsWork(theInventory) :
            
     author = lastName + ', ' + firstName
      
-    if (author in theInventory) == False:
-        
-        print('Sorry, but no books by ' + author + ' in the inventory')
-        
+    if (author in theInventory) == False:      
+        print('Sorry, but no books by ' + author + ' in the inventory')       
         return
-    else:
-        
-        for [title, qty, price] in sorted(theInventory[author]):
-         
-            print('       The title is: ' + title + '\n       The qty is: ' + qty + '\n       The price is: ' + price + '\n\n       ----')        
+    
+    else:             
+        for [title, qty, price] in sorted(theInventory[author]):       
+            print('       The title is: ' + title + '\n       The qty is: ' + qty + '\n       The price is: ' + price + '\n\n       ----')              
         
         return
     
@@ -103,53 +100,48 @@ def addBook(theInventory) :
     firstName = input('Enter the author\'s first name: ').lower().title()
     lastName = input('Enter the author\'s last name: ').lower().title() 
     title = input('Enter the title: ').lower().title()
-    qty = inputQty()
-    price = inputPrice()
     
     author = lastName + ', ' + firstName
     
-    if checkExisting(author, title, theInventory) == 'existing book':
-        
+    if checkExisting(author, title, theInventory) == 'existing book':        
         print('This book is already in the Inventory and cannot be added again')
         
-    elif checkExisting(author, title, theInventory) == 'existing author':
-        
+    elif checkExisting(author, title, theInventory).isdigit():   
+        qty = inputQty()
+        price = inputPrice()
         theInventory[author].append([title, qty, price])
         
-    else:
-        
+    else:       
+        qty = inputQty()
+        price = inputPrice()
         theInventory.update({author: [[title, qty, price]]})
                
     return
 
 def checkExisting(author, title, theInventory):
     
-    if author in theInventory:
+    if author in theInventory:   
+        cnt = 0
         
-        if title in theInventory[author]: 
+        for i in theInventory[author]:
             
-            return 'existing book'
-        
-        else:
-            
-            return 'existing author'
-        
+            if title in i:         
+                return str(cnt)
+            cnt += 1
+        return 'existing author'           
+                
     else:
-        
-        return
+        return 'no book'
 
 def inputQty():
     
-    while True:
-        
+    while True:    
         qty = input('Enter the qty: ')
         
         if(qty.isdigit() == True):
-            
             qty = float(qty)
-        
+            
             if (qty % 1 == 0 and qty > 0):
-                               
                 return str(int(qty))
             
         print('Invalid input for qty.')
@@ -160,12 +152,10 @@ def inputPrice():
         
         price = input('Enter the price: ')
         
-        if(len(price) == 4 and price[1] == '.' and price.replace('.', '', 1).isdigit() == True):
-            
+        if(len(price) == 4 and price[1] == '.' and price.replace('.', '', 1).isdigit() == True):            
             price = float(price)
             
-            if 0.00 < price <= 9.99:
-                
+            if 0.00 < price <= 9.99:          
                 return str(price)
         
         print('Invalid input for price.')
@@ -174,9 +164,45 @@ def inputPrice():
 
 def changePrice(theInventory) :
     
+    firstName = input('Enter the author\'s first name: ').lower().title()
+    lastName = input('Enter the author\'s last name: ').lower().title() 
+    author = lastName + ', ' + firstName
+    
+    if author in theInventory:
+        title = input('Enter the title: ').lower().title()
+        
+        if checkExisting(author, title, theInventory).isdigit():
+            price = inputPrice()
+            print('Price will be updated from ' + theInventory[author][int(checkExisting(author, title, theInventory))][2] + ' to ' + price)
+            theInventory[author][int(checkExisting(author, title, theInventory))][2] = price
+            
+        else:
+            print('No book with the title ' + title + ' by ' + author + ' in inventory.')
+    else:
+        print('No such author in your database.  So you cannot change the price')
+                            
     return
 
 def changeQty(theInventory) :
+    
+    firstName = input('Enter the author\'s first name: ').lower().title()
+    lastName = input('Enter the author\'s last name: ').lower().title() 
+    author = lastName + ', ' + firstName
+        
+    if author in theInventory:
+        title = input('Enter the title: ').lower().title()
+        
+        if checkExisting(author, title, theInventory).isdigit():
+            qty = inputQty()
+            print('Qty will be updated from ' + theInventory[author][int(checkExisting(author, title, theInventory))][1] + ' to ' + qty)
+            theInventory[author][int(checkExisting(author, title, theInventory))][1] = qty        
+            
+        else:
+            print('No book with the title ' + title + ' by ' + author + ' in inventory.')
+    else:
+        print('No such author in your database.  So you cannot change the price')
+                            
+    return
     
     return
 
@@ -216,7 +242,7 @@ def main() :
             print('Thank you for using this program')
             break
         else :
-            print('invalid choice')      
+            print('invalid choice')     
     
     return
 

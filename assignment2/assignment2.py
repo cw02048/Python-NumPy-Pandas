@@ -208,9 +208,27 @@ def changeQty(theInventory) :
 
 def totalQty(theInventory) :
     
+    total = 0
+    
+    for author in list(theInventory.keys()): 
+        
+        for book in theInventory[author]:
+            total = round(total + int(book[1]), 2)
+    
+    print('The total number of books is ' + str(total))
+    
     return
 
 def calculateTotalAmount(theInventory) :
+    
+    total = 0.00
+    
+    for author in list(theInventory.keys()):
+        
+        for book in theInventory[author]:
+            total = round(total + float(book[2]), 2)
+            
+    print('The total value of the inventory is $' + str(total))
     
     return
 

@@ -189,9 +189,8 @@ def inputPrice():
         
         # 양의 실수만 받음
         if(len(price) == 4 and price[1] == '.' and price.replace('.', '', 1).isdigit() == True):            
-            price = float(price)
             
-            if 0.00 < price <= 9.99:          
+            if 0.00 < float(price) <= 9.99:          
                 return str(price)
             
         # 잘못된 입력일 경우

@@ -131,7 +131,7 @@ def checkExisting(author, title, theInventory):
         return 'existing author'    
                 
     else:
-        return
+        return 'no author'
 
 def inputQty():
     
@@ -200,7 +200,7 @@ def changeQty(theInventory) :
         else:
             print('No book with the title ' + title + ' by ' + author + ' in inventory.')
     else:
-        print('No such author in your database.  So you cannot change the price')
+        print('No such author in your database.  So you cannot change the qty')
                             
     return
     
@@ -226,7 +226,7 @@ def calculateTotalAmount(theInventory) :
     for author in list(theInventory.keys()):
         
         for book in theInventory[author]:
-            total = round(total + float(book[2]), 2)
+            total = round(total + int(book[1]) * float(book[2]), 2)
             
     print('The total value of the inventory is $' + str(total))
     

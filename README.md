@@ -1,4 +1,4 @@
-# python-study
+# Python (NumPy & Pandas) Study
 파이썬 과제
 
 첫 번째 과제: 받은 정수의 진수를 변경

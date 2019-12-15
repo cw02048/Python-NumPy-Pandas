@@ -19,6 +19,8 @@ circle = ((radius - x)**2 + (4797/2 - y)**2)**0.5 > radius # 반지름 보다 �
 
 photo_data[circle] = 255 #  원 밖 전부 흰색으로 만들기
 
+plt.imshow(photo_data)
+
 black_white = np.logical_and(circle, x >= 1862 ) # 원 밖이면서 x 절반 아래
 photo_data[black_white] = 0 # 원 밖이면서 절반 아래를 검정색으로
 
